@@ -1,40 +1,61 @@
 // Dependencies
 const axios = require("axios");
 const cheerio = require("cheerio");
+// Require all models
+const db = require("../models");
 
 module.exports = function(app) {
     // Root route to display index.handlebars
     // Makes the axios call to NYT and stores information in DB
     app.get("/", function(req, res) {
+        const result = {};
         // Axios call to get information from NYT through Cheerio
         axios.get("https://www.nytimes.com").then(function(response) {
             const $ = cheerio.load(response.data);
-            const result = {};
+            // const result = {};
 
             $("article").each(function(i, element) {
 
                 // Add the text and href of every link, and save them as properties of the result object
                 result.title = $(this)
-                    .children("a")
+                    .children()
                     .text();
                 result.link = $(this)
                     .find("a")
                     .attr("href");
+                
+                // console.log(result);
+                // console.log(result.title);
+                // console.log(result.link);
 
                 // Create a new Article using the `result` object built from scraping
-                db.Article.create(results)
+                db.Article.create(result)
                 .then(function(dbArticle) {
                     // View the added result in the console
-                    console.log(dbArticle);
+                    // console.log(dbArticle);
+                    return dbArticle; 
                 })
                 .catch(function(err) {
                     console.log(err);
                 });
             });
 
-            console.log(results);
+            // console.log(result);
         });
+        db.Article.find({})
+        .then(function(dbArticle) {
+            // If we were able to successfully find Articles, send them back to the client
+            // res.json(dbArticle);
+            console.log("*********************************************************");
+            console.log(dbArticle);
+            console.log("*********************************************************");
+            res.render("index", { dbArticle });
+          })
+          .catch(function(err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+          });
         // TODO: Create Handlebars object to pass into index.handlebars
-        res.render("index", { hbsObjectTBD });
+        // res.render("index", { result });
     });
 }

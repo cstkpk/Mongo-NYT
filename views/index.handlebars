@@ -1,0 +1,23 @@
+<nav>
+<div class="nav-wrapper">
+    <a href="#" class="brand-logo">Mongo NYT</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+    <li><a href="sass.html">Home</a></li>
+    <li><a href="badges.html">Saved Articles</a></li>
+    </ul>
+</div>
+</nav>
+
+<div id="wrapper">
+    <h1>Note Scraper</h1>
+    <h2><i>If you can do this...the homework should be no problem.</i></h2>
+    <button id="view">View Articles</button>
+    <div id="articles">
+        {{#each dbArticle}}
+            {{!-- <p>{{this.title}}</p> --}}
+            <a href="https://www.nytimes.com{{this.link}}">{{this.title}}</a>
+            <br>
+        {{/each}}
+    </div>
+    <div id="notes"></div>
+</div>

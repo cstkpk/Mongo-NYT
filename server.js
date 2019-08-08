@@ -7,9 +7,9 @@ const mongoose = require("mongoose");
 // const cheerio = require("cheerio");
 
 // Require all models
-const db = require("./models");
+// const db = require("./models");
 
-const PORT = 3000;
+const PORT = 8080;
 
 // Initialize Express
 const app = express();
@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/NYT", { useNewUrlParser: true });
 
 // Handlebars
 app.engine(
