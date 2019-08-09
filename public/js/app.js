@@ -28,6 +28,8 @@ $(".note-btn").on("click", function(event) {
           $("#titleinput").val(data.note.title);
           // Place the body of the note in the body textarea
           $("#bodyinput").val(data.note.body);
+          // Add a delete button to delete notes
+          $("#notes").append("<button data-id='" + data._id + "' id='deletenote'>X</button>");
         }
       });
 });
@@ -40,7 +42,7 @@ $(document).on("click", "#savenote", function() {
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
       method: "POST",
-      url: "/articles/" + thisId,
+      url: "/api/articles/" + thisId,
       data: {
         // Value taken from title input
         title: $("#titleinput").val(),
@@ -59,7 +61,27 @@ $(document).on("click", "#savenote", function() {
     // Also, remove the values entered in the input and textarea for note entry
     $("#titleinput").val("");
     $("#bodyinput").val("");
-  });
+});
+
+// When you click the delete note button
+$(document).on("click", "#deletenote", function() {
+    var thisId = $(this).attr("data-id");
+    $.ajax({
+        method: "DELETE",
+        url: "/api/articles/" + thisId,
+        data: {
+            title: $("#titleinput").val(),
+            body: $("#bodyinput").val()
+        }
+    }).then(function(data) {
+        console.log(data);
+        $("#notes").empty();
+      });
+  
+    // Also, remove the values entered in the input and textarea for note entry
+    $("#titleinput").val("");
+    $("#bodyinput").val("");
+})
 
 $(document).on("click", ".save-btn", function() {
     var articleToSave = $(this)
