@@ -51,8 +51,6 @@ module.exports = function(app) {
           });
     });
 
-
-
     app.get("/saved", (req, res) => {
         db.Article.find({saved: true})
             .then(function (savedArticle) {
