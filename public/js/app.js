@@ -84,7 +84,7 @@ $(document).on("click", "#deletenote", function() {
 
 // Save article
 $(document).on("click", ".save-btn", function() {
-    var articleToSave = $(this)
+    let articleToSave = $(this)
     .parents(".card")
     .data();
 
@@ -100,6 +100,35 @@ $(document).on("click", ".save-btn", function() {
     $.ajax({
     method: "PUT",
     url: "/api/saved/" + thisId,
+    data: articleToSave
+    })
+    .then(function(data) {
+    // If the data was saved successfully
+    if (data.saved) {
+        // Remove saved card from home page ----- This doesn't work the way I thought it would...
+        location.reload();
+    }
+    });
+});
+
+// Unsave article
+$(document).on("click", ".unsave-btn", function() {
+    let articleToSave = $(this)
+    .parents(".card")
+    .data();
+
+    // Remove card from page
+    $(this)
+    .parents(".card")
+    .remove();
+
+    let thisId = $(this).attr("id");
+
+    articleToSave.saved = false;
+    // Using a patch method to be semantic since this is an update to an existing record in our collection
+    $.ajax({
+    method: "PUT",
+    url: "/api/unsaved/" + thisId,
     data: articleToSave
     })
     .then(function(data) {
