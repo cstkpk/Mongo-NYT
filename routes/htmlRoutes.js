@@ -50,4 +50,16 @@ module.exports = function(app) {
             res.json(err);
           });
     });
+
+
+
+    app.get("/saved", (req, res) => {
+        db.Article.find({saved: true})
+            .then(function (savedArticle) {
+                res.render("saved", { savedArticle });
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+    });
 }
