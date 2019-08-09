@@ -8,7 +8,6 @@ module.exports = function(app) {
     // Root route to display index.handlebars
     // Makes the axios call to NYT and stores information in DB
     app.get("/", function(req, res) {
-        // const result = {};
         // Axios call to get information from NYT through Cheerio
         axios.get("https://www.nytimes.com/section/world").then(function(response) {
             const $ = cheerio.load(response.data);
@@ -37,8 +36,6 @@ module.exports = function(app) {
                     console.log(err);
                 });
             });
-
-            // console.log(result);
         });
         db.Article.find({})
         .then(function(dbArticle) {
