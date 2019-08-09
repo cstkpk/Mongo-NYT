@@ -33,7 +33,7 @@ module.exports = function(app) {
     });
 
     // Route for saving an article's note
-    app.post("/api/articles/:id", function(req, res) {
+    app.post("/api/notes/:id", function(req, res) {
     // Create a new note and pass the req.body to the entry
     db.Note.create(req.body)
         .then(function(dbNote) {
@@ -52,14 +52,17 @@ module.exports = function(app) {
     });
 
   // Route for deleting an article's note
-  app.delete("/api/articles/:id", function (req, res) {
+  app.delete("/api/notes/:id", function (req, res) {
     // Create a new note and pass the req.body to the entry
     db.Note.findByIdAndRemove({ _id: req.params.id })
         .then(function (dbNote) {
-            return db.Article.findOneAndUpdate({ _id: req.params.id }, { $pullAll: [{ note: dbNote._id }]});
+            console.log("Deleting note...");
+            return db.Article.findOneAndDelete({ _id: req.params.id }, remove({ note: dbNote._id }));
         })
         .then(function (dbArticle) {
             res.json(dbArticle);
+            console.log("Note deleted");
+            console.log(dbArticle);
         })
         .catch(function (err) {
             res.json(err);
