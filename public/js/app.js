@@ -74,12 +74,14 @@ $(document).on("click", "#deletenote", function() {
         // }
     }).then(function(data) {
         console.log(data);
+        console.log("empty notes");
         $("#notes").empty();
       });
   
     // Also, remove the values entered in the input and textarea for note entry
     // $("#titleinput").val("");
     $("#bodyinput").val("");
+    console.log("body input val empty");
 })
 
 // Save article
