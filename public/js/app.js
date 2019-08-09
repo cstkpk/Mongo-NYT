@@ -41,26 +41,25 @@ $(document).on("click", "#savenote", function() {
   
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
-      method: "POST",
-      url: "/api/articles/" + thisId,
-      data: {
-        // Value taken from title input
-        title: $("#titleinput").val(),
-        // Value taken from note textarea
-        body: $("#bodyinput").val()
-      }
+        method: "POST",
+        url: "/api/articles/" + thisId,
+        data: {
+            // Value taken from title input
+            title: $("#titleinput").val(),
+            // Value taken from note textarea
+            body: $("#bodyinput").val()
+        }
     })
-      // With that done
-      .then(function(data) {
-        // Log the response
+    .then(function(data) {
         console.log(data);
         // Empty the notes section
         $("#notes").empty();
-      });
+    });
   
     // Also, remove the values entered in the input and textarea for note entry
     $("#titleinput").val("");
     $("#bodyinput").val("");
+
 });
 
 // When you click the delete note button
@@ -83,10 +82,16 @@ $(document).on("click", "#deletenote", function() {
     $("#bodyinput").val("");
 })
 
+// Save article
 $(document).on("click", ".save-btn", function() {
     var articleToSave = $(this)
     .parents(".card")
     .data();
+
+    // Remove card from page
+    $(this)
+    .parents(".card")
+    .remove();
 
     let thisId = $(this).attr("id");
 
@@ -97,11 +102,11 @@ $(document).on("click", ".save-btn", function() {
     url: "/api/saved/" + thisId,
     data: articleToSave
     })
-    // .then(function(data) {
-    // // If the data was saved successfully
-    // if (data.saved) {
-    //     // Run the initPage function again. This will reload the entire list of articles
-    //     initPage();
-    // }
-    // });
+    .then(function(data) {
+    // If the data was saved successfully
+    if (data.saved) {
+        // Remove saved card from home page ----- This doesn't work the way I thought it would...
+        location.reload();
+    }
+    });
 });
