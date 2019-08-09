@@ -57,7 +57,8 @@ module.exports = function(app) {
     db.Note.findByIdAndRemove({ _id: req.params.id })
         .then(function (dbNote) {
             console.log("Deleting note...");
-            return db.Article.findOneAndDelete({ _id: req.params.id }, remove({ note: dbNote._id }));
+            // return db.Article.findOneAndDelete({ _id: req.params.id }, remove({ note: dbNote._id }));
+            return db.Article.deleteOne(({ note: dbNote._id }));
         })
         .then(function (dbArticle) {
             res.json(dbArticle);
