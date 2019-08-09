@@ -3,7 +3,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const db = require("../models");
 
-module.exports = function(app) {
+module.exports = app => {
 
     // Route for getting all articles
     app.get("/articles", function(req, res) {
@@ -54,12 +54,14 @@ module.exports = function(app) {
   // Route for deleting an article's note
   app.delete("/api/notes/:id", function (req, res) {
     // Create a new note and pass the req.body to the entry
+    console.log(req.params.id);
     db.Note.findByIdAndRemove({ _id: req.params.id })
         .then(function (dbNote) {
             console.log("Deleting note...");
             // return db.Article.findOneAndDelete({ _id: req.params.id }, remove({ note: dbNote._id }));
             // return db.Article.deleteOne(({ note: dbNote._id }));
-            console.log(dbNote);
+            // console.log(dbNote);
+            // res.json(dbNote);
         })
         .then(function (dbArticle) {
             res.json(dbArticle);

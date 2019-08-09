@@ -1,7 +1,7 @@
 $(".note-btn").on("click", function(event) {
     // event.preventDefault();
     $("#notes").empty();
-    var thisId = $(this).attr("id");
+    let thisId = $(this).attr("id");
     console.log(thisId);
   
     // Now make an ajax call for the Article
@@ -36,7 +36,7 @@ $(".note-btn").on("click", function(event) {
 // When you click the savenote button
 $(document).on("click", "#savenote", function() {
     // Grab the id associated with the article from the submit button
-    var thisId = $(this).attr("data-id");
+    let thisId = $(this).attr("data-id");
   
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
@@ -63,7 +63,7 @@ $(document).on("click", "#savenote", function() {
 
 // When you click the delete note button
 $(document).on("click", "#deletenote", function() {
-    var thisId = $(this).attr("data-id");
+    let thisId = $(this).attr("data-id");
     console.log(thisId);
     $.ajax({
         method: "DELETE",
@@ -76,7 +76,7 @@ $(document).on("click", "#deletenote", function() {
         console.log(data);
         console.log("empty notes");
         $("#notes").empty();
-      });
+    });
   
     // Also, remove the values entered in the input and textarea for note entry
     // $("#titleinput").val("");
