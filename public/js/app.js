@@ -1,7 +1,6 @@
 $(".note-btn").on("click", function(event) {
-    event.preventDefault();
+    // event.preventDefault();
     $("#notes").empty();
-    // Save the id from the p tag
     var thisId = $(this).attr("id");
     console.log(thisId);
   
@@ -65,6 +64,7 @@ $(document).on("click", "#savenote", function() {
 // When you click the delete note button
 $(document).on("click", "#deletenote", function() {
     var thisId = $(this).attr("data-id");
+    console.log(thisId);
     $.ajax({
         method: "DELETE",
         url: "/api/notes/" + thisId,

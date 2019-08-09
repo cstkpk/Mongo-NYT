@@ -9,6 +9,7 @@
 </nav>
 
 <div id="wrapper">
+            <div id="notes"></div>
     <div id="articles">
         {{#each savedArticle}}
             {{#if saved}}
@@ -19,13 +20,12 @@
                         <span class="card-title">{{this.title}}</span>
                         <p>{{this.summary}}</p><br>
                         <a id={{this._id}} class="waves-effect waves-light btn unsave-btn">Remove from Saved</a>
-                        <a id={{this._id}} class="waves-effect waves-light btn note-btn">Add Note</a>
+                        <a id={{this._id}} class="waves-effect waves-light btn note-btn" href="#">Add Note</a>
                         </div>
                         <div class="card-action">
                         <a href="https://www.nytimes.com{{this.link}}">Take me to the article</a>
                         </div>
                     </div>
-                    <div id="notes"></div>
                 </div>
             </div>
             <br><br>
